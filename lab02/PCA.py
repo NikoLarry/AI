@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from math import pi
 import matplotlib.pyplot as plt
 
 
@@ -35,65 +36,76 @@ def main():
     test_arr, used_arr = te_us_from_data(test_num_list, data_arr)  # 生成测试样本列表，训练样本列表
                                                                    # 形状为 样本个数*14
     # 以下三个是同学们可以用到的三组数据：训练集的特征，训练集的标签，测试集的特征
-    train_features = used_arr[:,1:]# 训练集共142个数据
+    train_features = used_arr[:,1:]     # 训练集共142个数据
     train_labels = used_arr[:,0]
-    test_features = test_arr[:,1:]# 测试集共36个数据
+    test_features = test_arr[:,1:]      # 测试集共36个数据
 
     ############## 同学完成 ###############
     # task：同学最终需要得到的结果是根据特征test_features，得到test集的预测红酒种类test_result_arr（36*1的向量，每个元素代表test集中每个数据的种类
+    result = []
+    d = 6
     train_size = train_features.shape
-    sum_feature = np.zeros(train_size[1])
-    for i in range(train_size[0]):
-        sum_feature = sum_feature + train_features[i, :]
-    mean_feature = sum_feature/train_labels[0]
-    for i in range(train_size[0]):
-        train_features[i, :] = train_features[i, :] - mean_feature        # 对个样本属性数据中心化
-
-    # 降到指定维数
-    d = 2
-    X = np.mat(np.cov(np.array(train_size.T)))
+    train_mean = train_features.mean(axis=0)
+    train_features = train_features - train_mean          # 对个样本属性数据中心化
+                                                    # 降到指定维数
+    X = np.cov(np.array(train_features.T))                       # 计算特征值与特征向量
     w, v = np.linalg.eig(X)
-    dimension_array = np.mat(v[:d, :].T)
-    Y = X * dimension_array         # 投影
+    idx = w.argsort()[::-1]         # 按降序排列
+    eigenvectors = v[:, idx]
+    dimension_array = eigenvectors[:, :d]
 
+    Y =np.dot(train_features, dimension_array)                                # 投影
 
     # 贝叶斯分类
-    P1,P2,P3 = 0                    # 类别先验概率
+
+
+    N1,N2,N3 = 0,0,0                    # 类别先验概率
+    wine1 = []
+    wine2 = []
+    wine3 = []
     for i in range(train_size[0]):
         if(train_labels[i] == 1):
-            P1 = P1 + 1
+            N1 = N1 + 1
+            wine1.append(Y[i,:])
         if(train_labels[i] == 2):
-            P2 = P2 +1
+            N2 = N2 +1
+            wine2.append(Y[i, :])
         if(train_labels[i] == 3):
-            P3 = P3 +1
-    P1 = P1/train_size[0]
-    P2 = P2/train_size[0]
-    P3 = P3/train_size[0]
+            N3 = N3 +1
+            wine3.append(Y[i, :])
+
+    # 先验概率
+    P1 = N1/train_size[0]
+    P2 = N2/train_size[0]
+    P3 = N3/train_size[0]
 
 
+    wine1 = np.array(wine1)
+    wine2 = np.array(wine2)
+    wine3 = np.array(wine3)
+    avg = [[[] for m in range(d)] for n in range(3)]
+    sigma = [[[] for m in range(d)] for n in range(3)]
+    for i in range(d):                                             # 计算第i类在第c个属性上的均值方差
+        avg[0][i].append(np.mean(wine1[:, i],axis=0))             # 降维后第 c 个属性样本均值
+        sigma[0][i].append(np.var(wine1[:, i]))                        # 降维后第C个属性样本方差
+        avg[1][i].append(np.mean(wine2[:, i],axis=0))
+        sigma[1][i].append(np.var(wine2[:, i]))
+        avg[2][i].append(np.mean(wine3[:, i],axis=0))
+        sigma[2][i].append(np.var(wine3[:, i]))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Test = test_features - train_mean
+    y = np.dot(Test, dimension_array)
+    test_result_arr = []
+    # print(y)
+    for j in range(len(y[:, 0])):
+        p1, p2, p3 = 1, 1, 1
+        for i in range(d):
+            p1 = p1 * 1 / (np.sqrt(2 * pi * sigma[0][i][0])) * np.exp(-(y[j, i] - avg[0][i][0]) ** 2 / (2 * sigma[0][i][0]))
+            p2 = p2 * 1 / (np.sqrt(2 * pi * sigma[1][i][0])) * np.exp(-(y[j, i] - avg[1][i][0]) ** 2 / (2 * sigma[1][i][0]))
+            p3 = p3 * 1 / (np.sqrt(2 * pi * sigma[2][i][0])) * np.exp(-(y[j, i] - avg[2][i][0]) ** 2 / (2 * sigma[2][i][0]))
+        A = [p1*P1,p2*P2,p3*P3]
+        test_result_arr.append(A.index(max(A))+1)
+    test_result_arr = np.array(test_result_arr)
 
 
 
@@ -104,6 +116,15 @@ def main():
     contract_arr = test_result_arr - test_arr[:, 0]
     goodones = len(np.argwhere(contract_arr == 0)) # 这个正确率可以作为评价指标
     print(goodones)
+    result.append(goodones)
+    # d1 = [i for i in range(13)]
+    #
+    # plt.plot(d1,result)
+    # plt.title("判断正确数随维度变化")
+    # plt.xlabel("PCA维度")
+    # plt.ylabel("正确数量/个")
+    # plt.show()
+
 
 if __name__ =='__main__':
     main()
