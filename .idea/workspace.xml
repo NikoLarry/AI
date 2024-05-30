@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2f80808b-8982-49ea-9203-babfee09c844" name="变更" comment="lab03-add">
+    <list default="true" id="2f80808b-8982-49ea-9203-babfee09c844" name="变更" comment="lab03-3d vision">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab03/K-means.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab03/K-means.py" afterDir="false" />
     </list>
@@ -104,7 +104,21 @@
       <option name="project" value="LOCAL" />
       <updated>1717066223829</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="lab03-3d vision">
+      <created>1717069635034</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717069635034</updated>
+    </task>
+    <task id="LOCAL-00008" summary="lab03-3d vision">
+      <created>1717069689673</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1717069689673</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -124,12 +138,17 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
               <option name="FILTERS">
                 <map>
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/master" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -145,7 +164,8 @@
     <MESSAGE value="lab02" />
     <MESSAGE value="1" />
     <MESSAGE value="lab03-add" />
-    <option name="LAST_COMMIT_MESSAGE" value="lab03-add" />
+    <MESSAGE value="lab03-3d vision" />
+    <option name="LAST_COMMIT_MESSAGE" value="lab03-3d vision" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

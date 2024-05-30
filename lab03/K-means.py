@@ -19,6 +19,8 @@ def main():
         for i in range(len(a)):
             d = d + (a[i] - b[i]) ** 2
         return d
+
+    ########################    降维聚类    #################
     dim = 8
     data_mean = data_arr.mean(axis=0)
     data_arr1 = data_arr - data_mean                              # 对个样本属性数据中心化
@@ -30,6 +32,8 @@ def main():
     dimension_array = eigenvectors[:, :dim]
 
     data_arr1 = np.dot(data_arr1, dimension_array)                                # 投影
+    ######################## 降维聚类 ######################
+
 
     sigma = 0.1 # 方差缩放比例
     data_arr_normalize = data_arr1 - data_arr1.mean(axis=0)           # 数据中心化
@@ -37,9 +41,6 @@ def main():
     for i in range(len(data_arr1[0, :])):                             # 方差比例缩放,归一化[-1,1]
         data_arr_normalize[:, i] = data_arr_normalize[:, i] * np.var(data_arr_normalize[:, i]) * sigma
         data_arr_normalize[:, i] = data_arr_normalize[:, i] / max(np.max(data_arr_normalize[:, i]), -np.min(data_arr_normalize[:, i]))
-    k1 = []
-    k2 = []
-    k3 = []
 
     K = 3                      # 聚类类别数
 
@@ -74,7 +75,12 @@ def main():
 
 
 
+
+
     ######################## 降维可视化 ####################
+    k1 = []
+    k2 = []
+    k3 = []
     d = 3
     data_mean = data_arr.mean(axis=0)
     data_arr = data_arr - data_mean  # 对个样本属性数据中心化
@@ -139,7 +145,6 @@ def main():
     # 创建Figure并绘制
     fig = go.Figure(data=[scatter1,scatter2,scatter3], layout=layout)
     fig.show()
-
 
 
 if __name__ == '__main__':
