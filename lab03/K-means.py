@@ -128,7 +128,6 @@ def main():
             color='green',
         )
     )
-
     # 创建布局
     layout = go.Layout(
         scene=dict(
@@ -137,7 +136,6 @@ def main():
             zaxis_title='Z Axis'
         )
     )
-
     # 创建Figure并绘制
     fig = go.Figure(data=[scatter1,scatter2,scatter3], layout=layout)
     fig.show()
