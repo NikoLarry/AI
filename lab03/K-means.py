@@ -35,11 +35,10 @@ def main():
     ######################## 降维聚类 ######################
 
 
-    sigma = 0.1 # 方差缩放比例
     data_arr_normalize = data_arr1 - data_arr1.mean(axis=0)           # 数据中心化
 
     for i in range(len(data_arr1[0, :])):                             # 方差比例缩放,归一化[-1,1]
-        data_arr_normalize[:, i] = data_arr_normalize[:, i] * np.var(data_arr_normalize[:, i]) * sigma
+        data_arr_normalize[:, i] = data_arr_normalize[:, i] * np.sqrt(np.var(data_arr_normalize[:, i]))
         data_arr_normalize[:, i] = data_arr_normalize[:, i] / max(np.max(data_arr_normalize[:, i]), -np.min(data_arr_normalize[:, i]))
 
     K = 3                      # 聚类类别数
@@ -47,8 +46,10 @@ def main():
     point_index = np.random.choice([i for i in range(len(data_arr_normalize[:, 0]))], K, replace=False)
     point = np.array([data_arr_normalize[point_index[i], :] for i in range(K)])           # 初始化point
     D_min = np.zeros((len(data_arr_normalize[:, 0])))
-
-    for m in range(1000):
+    # old_point = np.zeros_like(point)
+    for iter in range(1000):
+    # while not np.array_equal(old_point, point):
+    #     old_point = np.copy(point)
         D = []
         for p in point:
             d = []
@@ -105,9 +106,9 @@ def main():
 
     # 创建散点图数据
     scatter1 = go.Scatter3d(
-        x=k1[:,0],
-        y=k1[:,1],
-        z=k1[:,2],
+        x=k1[:, 0],
+        y=k1[:, 1],
+        z=k1[:, 2],
         mode='markers',
         marker=dict(
             size=5,

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2f80808b-8982-49ea-9203-babfee09c844" name="变更" comment="lab03-3d vision">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lab02/PCA.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab02/PCA.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lab03/K-means.py" beforeDir="false" afterPath="$PROJECT_DIR$/lab03/K-means.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1717069689673</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="lab03-3d vision">
+      <created>1717070057511</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1717070057511</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">

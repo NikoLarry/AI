@@ -43,18 +43,20 @@ def main():
     ############## 同学完成 ###############
     # task：同学最终需要得到的结果是根据特征test_features，得到test集的预测红酒种类test_result_arr（36*1的向量，每个元素代表test集中每个数据的种类
     result = []
-    d = 6
+    d = 2
     train_size = train_features.shape
     train_mean = train_features.mean(axis=0)
     train_features = train_features - train_mean          # 对个样本属性数据中心化
-                                                    # 降到指定维数
+
+
+                                                                 # 降到指定维数
     X = np.cov(np.array(train_features.T))                       # 计算特征值与特征向量
     w, v = np.linalg.eig(X)
     idx = w.argsort()[::-1]         # 按降序排列
     eigenvectors = v[:, idx]
     dimension_array = eigenvectors[:, :d]
 
-    Y =np.dot(train_features, dimension_array)                                # 投影
+    Y = np.dot(train_features, dimension_array)                                # 投影
 
     # 贝叶斯分类
 
